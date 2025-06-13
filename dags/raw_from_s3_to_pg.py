@@ -125,7 +125,8 @@ def get_and_transfer_raw_data_to_ods_pg(**context):
             status,
             locationSource AS location_source,
             magSource AS mag_source
-        FROM 's3://prod/{LAYER}/{SOURCE}/{start_date}/{start_date}_00-00-00.gz.parquet';
+        FROM 's3://prod/{LAYER}/{SOURCE}/{start_date}/{start_date}_00-00-00.gz.parquet'
+        WHERE id NOT IN (SELECT id FROM dwh_postgres_db.{SCHEMA}.{TARGET_TABLE});
         """,
     )
 
